@@ -1,0 +1,30 @@
+{
+  "name": "fqe",
+  "version": "1.0.0",
+  "description": "Backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanchew3/fqe.git"
+  },
+  "author": "Ryan Chew",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryanchew3/fqe/issues"
+  },
+  "homepage": "https://github.com/ryanchew3/fqe#readme",
+  "dependencies": {
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^16.5.2",
+    "mongoose": "^4.11.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
