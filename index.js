@@ -1,17 +1,14 @@
+//index.js
 'use strict';
 
-const Hapi = require('hapi');
-const mongoose = require('mongoose');
-const Good = require('good');
+const Hapi      = require('hapi');
+const database  = require('./plugins/database').db;
+
+const Good      = require('good');
 
 //create server with host and port
-const server = new Hapi.Server();
-const databaseUrl = 'localhost:27017';
-const databaseOptions = {
-  db: { native_parser: true,
-  useMongoClient: true },
+const server    = new Hapi.Server();
 
-}
 
 server.connection({
   host: 'localhost',
@@ -21,12 +18,12 @@ server.connection({
 //routes
 server.route({
   method: 'GET',
-  path:'/',
-  handler: function (req, res) {
-
-    return reply('You shouldn\'t be here!' );
+  path: '/',
+  handler: function (request, reply) {
+    reply('You shouldn\'t be here!');
   }
 });
+
 
 server.register({
     register: Good,
@@ -56,10 +53,6 @@ server.register({
           throw err;
       }
 
-      mongoose.connect(databaseUrl, databaseOptions, function(err) {
-          if (err) server.log('error', err);
-
-      });
 
 
       server.log('info', 'Server running at: ' + server.info.uri);
