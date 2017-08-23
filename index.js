@@ -1,28 +1,26 @@
 //index.js
 'use strict';
 
-const Hapi      = require('hapi');
-const database  = require('./plugins/database').db;
+const Hapi      =   require('hapi');
+const Good      =   require('good');
 
-const Good      = require('good');
+const server    =   new Hapi.Server();
+const database  =   require('./plugins/database').db;
+const routes    =   require('./routes/routes');
 
-//create server with host and port
-const server    = new Hapi.Server();
-
+////////////////////////////////////////////////////////////////////////////////
 
 server.connection({
   host: 'localhost',
   port: 1337
 });
 
+server.route(routes);
+
 //routes
-server.route({
-  method: 'GET',
-  path: '/',
-  handler: function (request, reply) {
-    reply('You shouldn\'t be here!');
-  }
-});
+/*server.route({
+
+});*/
 
 
 server.register({
@@ -52,8 +50,6 @@ server.register({
       if (err) {
           throw err;
       }
-
-
 
       server.log('info', 'Server running at: ' + server.info.uri);
   });
