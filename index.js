@@ -4,7 +4,9 @@
 const Hapi      =   require('hapi');
 const Good      =   require('good');
 
+
 const server    =   new Hapi.Server();
+const config    =   require('./config');
 const database  =   require('./plugins/database').db;
 const routes    =   require('./routes/routes');
 
@@ -12,15 +14,17 @@ const routes    =   require('./routes/routes');
 
 server.connection({
   host: 'localhost',
-  port: 1337
+  port: 1337,
+  routes: {
+      cors: true
+  }
 });
+
+//server.auth.strategy('localhost', 'ip-whitelist', '127.0.0.1');
 
 server.route(routes);
 
-//routes
-/*server.route({
 
-});*/
 
 
 server.register({

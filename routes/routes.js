@@ -29,6 +29,21 @@ const CreateRandomTestData = {
 
 }
 
+const GetRandomData = {
+    method: 'GET',
+    path: '/api/testData/',
+    handler: function (request, reply) {
+        TestData.find({}, function(err, testDataList) {
+            if (err) {
+                reply(err);
+                return;
+            }
+
+            reply(testDataList);
+        });
+    }
+}
+
 module.exports = [
   ServerRootRoute,
   CreateRandomTestData

@@ -9,8 +9,7 @@ const databaseOptions = {
 }
 
 //load database
-Mongoose.connect(databaseUrl, databaseOptions, function(err) {
-    if (err) server.log('error', err);
+Mongoose.connect(databaseUrl, databaseOptions, function() {
 });
 const db = Mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
