@@ -9,6 +9,7 @@ const databaseOptions = {
 }
 
 //load database
+Mongoose.Promise = global.Promise;
 Mongoose.connect(databaseUrl, databaseOptions, function() {
 });
 const db = Mongoose.connection;

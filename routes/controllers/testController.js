@@ -2,10 +2,19 @@
 
 const Joi           =   require('Joi');
 const Boom          =   require('Boom');
+const Mongoose      =   require('Mongoose');
 
-const Component     =   require('../models/Component');
-const TestData      =   require('../models/TestData').TestData;
+const Component     =   require('../../models/Component').Component;
+const TestData      =   require('../../models/TestData').TestData;
 
+
+exports.showAPI = {
+    handler: function(request, reply) {
+        reply({
+            'message': 'Hello API!'
+        })
+    }
+};
 
 exports.getTestData = {
     handler: function(request, reply) {
@@ -45,7 +54,9 @@ exports.create = {
     },
     handler: function(request, reply) {
         const testData = new TestData(request.payload);
+        testData._id = Mongoose.Types.ObjectId();
         testData.save(function(err, testData) {
+            console.log(err);
             if (!err) {
                 reply(testData).created('/api/testData/' + testData._id); // HTTP 201
             }

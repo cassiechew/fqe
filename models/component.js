@@ -10,5 +10,7 @@ const ComponentSchema = new Schema({
     components: { type: [this] }
 });
 
-
-module.exports = Mongoose.model('component', ComponentSchema);
+const component = Mongoose.model('component', ComponentSchema);
+module.exports = {
+    Component: component
+}
