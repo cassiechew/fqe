@@ -1,4 +1,6 @@
 //index.js
+
+//basic server
 'use strict';
 
 const Hapi      =   require('hapi');
@@ -22,9 +24,9 @@ server.connection({
 
 //server.auth.strategy('localhost', 'ip-whitelist', '127.0.0.1');
 
-server.route(routes);
+server.route(routes.endpoints);
 
-
+console.log(routes.endpoints[0]);
 
 
 server.register({

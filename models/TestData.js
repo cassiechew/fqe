@@ -2,8 +2,8 @@ const Mongoose    =   require('mongoose');
 const Schema      =   Mongoose.Schema;
 
 const TestDataSchema  =   new Schema({
-  TestId: { type: String, unique: true, required: true },
-  RandomString: { type: String, unique: true, required: true }
+  testId: { type: String, unique: true, required: true },
+  randomString: { type: String, unique: true, required: true }
 });
 
 
