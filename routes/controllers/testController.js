@@ -55,18 +55,27 @@ exports.create = {
     handler: function(request, reply) {
         const testData = new TestData(request.payload);
         testData._id = Mongoose.Types.ObjectId();
-        testData.save(function(err, testData) {
-            console.log(err);
-            if (!err) {
-                reply(testData).created('/api/testData/' + testData._id); // HTTP 201
-            }
-            else {
-                if (11000 === err.code || 11001 === err.code) {
-                    reply(Boom.forbidden("please provide another test id, it already exist"));
+        TestData.findOne({
+          'testId': request.params.testId
+        }, function(err1, testId) {
+          if(!err1) {
+            reply('This DataID has been taken');
+          }
+          else {
+            testData.save(function(err, testData) {
+                console.log(err);
+                if (!err) {
+                    reply(testData).created('/api/testData/' + testData._id); // HTTP 201
                 }
-                else reply(Boom.forbidden(getErrorMessageFrom(err))); // HTTP 403
-            }
-        });
+                else {
+                    if (11000 === err.code || 11001 === err.code) {
+                        reply(Boom.forbidden("please provide another test id, it already exist"));
+                    }
+                    else reply(Boom.forbidden(getErrorMessageFrom(err))); // HTTP 403
+                }
+            });
+          }
+        })
     }
 }
 
@@ -77,7 +86,6 @@ exports.update = {
             randomString: Joi.string().required()
         }
     },
-
     handler: function(request, reply) {
         TestData.findOne({
             'testId': request.params.testId

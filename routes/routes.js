@@ -6,6 +6,7 @@ const testController = require('./controllers/testController');
 
 //endpoints
 exports.endpoints = [
+    //testing
     { method: 'GET', path: '/api', config: testController.showAPI },
     { method: 'GET', path: '/api/testData', config: testController.getTestData },
     { method: 'GET', path: '/api/testData/{testId}', config: testController.getOneTestData },
