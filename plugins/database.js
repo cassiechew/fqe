@@ -9,11 +9,14 @@ const databaseOptions = {
 }
 
 //load database
-Mongoose.connect(databaseUrl, databaseOptions, function(err) {
-    if (err) server.log('error', err);
+Mongoose.Promise = global.Promise;
+Mongoose.connect(databaseUrl, databaseOptions, function() {
 });
 const db = Mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error'));
+db.on('error', function calback() {
+    console.log('Connection failed');
+    return;
+}/*console.error.bind(console, 'connection error')*/);
 db.once('open', function callback() {
     console.log('Connection with database succeeded.');
 });

@@ -1,10 +1,14 @@
 //index.js
+
+//basic server
 'use strict';
 
 const Hapi      =   require('hapi');
 const Good      =   require('good');
 
+
 const server    =   new Hapi.Server();
+const config    =   require('./config');
 const database  =   require('./plugins/database').db;
 const routes    =   require('./routes/routes');
 
@@ -12,15 +16,17 @@ const routes    =   require('./routes/routes');
 
 server.connection({
   host: 'localhost',
-  port: 1337
+  port: 1337,
+  routes: {
+      cors: true
+  }
 });
 
-server.route(routes);
+//server.auth.strategy('localhost', 'ip-whitelist', '127.0.0.1');
 
-//routes
-/*server.route({
+server.route(routes.endpoints);
 
-});*/
+
 
 
 server.register({
