@@ -17,7 +17,7 @@ const ComponentSchema       = new Schema({
     components:     { type: [this] }
 });
 
-const component = Mongoose.model('component', ComponentSchema);
+const componentModel = Mongoose.model('component', ComponentSchema);
 
 showAPI = {
     handler: function(request, reply) {
@@ -29,15 +29,54 @@ showAPI = {
 
 getAllComponents = {
     handler: function(request, reply) {
-        component.find({}, function(err, component) {
+        componentModel.find({}, function(err, component) {
             if (err) reply(Boom.badRequest(err));
             reply(component);
         });
     }
 }
 
+
+createComponent = {
+    validate: {
+        payload: {
+            componentId:    Joi.string().required(),
+            name:           Joi.string().required(),
+            price:          Joi.number().required(),
+            type:           Joi.required()
+            //testId: Joi.string().required(),
+            //randomString: Joi.string().required()
+        }
+    },
+    handler: function(request, reply) {
+        const newComponent = new componentModel(request.payload);
+        componentModel.findOne({
+            componentId: request.payload.componentId
+        }, function(err, exists) {
+            
+            if (!exists) {
+                newComponent.save(function(err, component) {
+                    if (!err) {
+                        return reply(component).created(); // HTTP 201
+                    }
+                    else {
+                        if (11000 === err.code || 11001 === err.code) {
+                            reply(Boom.forbidden("Component is probably already entered"));
+                        }
+                        else reply(Boom.forbidden(getErrorMessageFrom(err))); // HTTP 403
+                    }
+                });
+            }
+            else {
+                reply(Boom.badRequest("Component already exists"));
+            }
+        })
+    }
+}
+
 module.exports = {
-    Component: component,
+    Component: componentModel,
     showAPI,
-    getAllComponents
+    getAllComponents,
+    createComponent
 }
