@@ -26,7 +26,7 @@ server.connection({
 
 server.route(routes.endpoints);
 
-console.log(routes.endpoints[0]);
+
 
 
 server.register({
