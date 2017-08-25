@@ -13,7 +13,7 @@ Mongoose.Promise = global.Promise;
 Mongoose.connect(databaseUrl, databaseOptions, function() {
 });
 const db = Mongoose.connection;
-db.on('error', function callback() {
+db.on('error', function calback() {
     console.log('Connection failed');
     return;
 }/*console.error.bind(console, 'connection error')*/);
