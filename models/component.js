@@ -1,6 +1,9 @@
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
+const Joi = require('Joi');
+const Boom = require('Boom');
+
 const BASECOMPONENT = 0;
 const COMPOSITECOMPONENT = 1;
 
@@ -24,7 +27,17 @@ showAPI = {
     }
 }
 
+getAllComponents = {
+    handler: function(request, reply) {
+        component.find({}, function(err, component) {
+            if (err) reply(Boom.badRequest(err));
+            reply(component);
+        });
+    }
+}
+
 module.exports = {
     Component: component,
-    showAPI
+    showAPI,
+    getAllComponents
 }

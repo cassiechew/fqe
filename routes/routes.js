@@ -17,5 +17,6 @@ exports.endpoints = [
     { method: 'DELETE', path: '/api/v1.0/testData/{testId}', config: testController.remove },
 
     //components
-    { method: 'GET', path: '/api/v1.1/', config: componentController.showAPI }
+    { method: 'GET', path: '/api/v1.1/', config: componentController.showAPI },
+    { method: 'GET', path: '/api/v1.1/components/', config: componentController.getAllComponents }
 ]
