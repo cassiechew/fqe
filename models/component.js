@@ -36,6 +36,23 @@ getAllComponents = {
     }
 }
 
+getOneComponent = {
+    validate: {
+        payload: {
+            componentId:    Joi.string().required()
+            //name:           Joi.string().required()
+        }
+    },
+    handler: function(request, reply) {
+        componentModel.findOne({
+            componentId:    request.payload.componentId,
+        }, function(err, componentData) {
+            if (err) reply(Boom.badRequest(err));
+            reply(componentData);
+        });
+    }
+}
+
 
 createComponent = {
     validate: {
@@ -53,7 +70,7 @@ createComponent = {
         componentModel.findOne({
             componentId: request.payload.componentId
         }, function(err, exists) {
-            
+
             if (!exists) {
                 newComponent.save(function(err, component) {
                     if (!err) {
@@ -70,7 +87,7 @@ createComponent = {
             else {
                 reply(Boom.badRequest("Component already exists"));
             }
-        })
+        });
     }
 }
 
@@ -78,5 +95,6 @@ module.exports = {
     Component: componentModel,
     showAPI,
     getAllComponents,
+    getOneComponent,
     createComponent
 }
