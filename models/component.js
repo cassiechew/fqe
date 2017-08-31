@@ -91,6 +91,15 @@ createComponent = {
     }
 }
 
+
+updateComponent = {
+    validate: {
+        payload: {
+            testId: Joi.string().required()
+        }
+    }
+}
+
 module.exports = {
     Component: componentModel,
     showAPI,
