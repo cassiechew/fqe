@@ -7,12 +7,15 @@ const Boom                  = require('Boom');
 const BASECOMPONENT         = 0;
 const COMPOSITECOMPONENT    = 1;
 
+
+
 const KIND                  = [ BASECOMPONENT, COMPOSITECOMPONENT ];
 
 const ComponentSchema       = new Schema({
     componentId:    { type: String, unique: true, required: true },
     name:           { type: String, unique: true, required: true },
     price:          { type: Number, requred: true },
+
     type:           { type: KIND, required: true }, //is is a base component or is it composite
     components:     { type: [this] }
 });
@@ -111,11 +114,37 @@ updateComponent = {
     }
 };
 
+deleteComponent = {
+    validate: {
+        payload: {
+            componentId: Joi.string().required(),
+            areYouSure: Joi.boolean().required()
+        }
+    },
+    handler: function(request, reply) {
+        componentModel.findOne({
+            componentId: request.payload.componentId
+        }, function(err, component) {
+            if (!err && component && (request.payload.areYouSure == true)) {
+                component.remove();
+                reply().code(204);
+            }
+            else if (!err && (request.payload.areYouSure == true)) {
+                reply(Boom.badRequest("Data Not Found"));
+            }
+            else {
+                reply(Boom.badRequest());
+            }
+        });
+    }
+};
+
 module.exports = {
     Component: componentModel,
     showAPI,
     getAllComponents,
     getOneComponent,
     createComponent,
-    updateComponent
+    updateComponent,
+    deleteComponent
 }

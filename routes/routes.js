@@ -21,5 +21,6 @@ exports.endpoints = [
     { method: 'GET', path: '/api/v1.1/components/', config: componentController.getAllComponents },
     { method: 'POST', path: '/api/v1.1/components/getOneComponent/', config: componentController.getOneComponent },
     { method: 'POST', path: '/api/v1.1/components/create/', config: componentController.createComponent },
-    { method: 'PUT', path: '/api/v1.1/components/update/', config: componentController.updateComponent }
+    { method: 'PUT', path: '/api/v1.1/components/update/', config: componentController.updateComponent },
+    { method: 'DELETE', path: '/api/v1.1/components/delete/', config: componentController.deleteComponent }
 ]
