@@ -20,5 +20,6 @@ exports.endpoints = [
     { method: 'GET', path: '/api/v1.1/', config: componentController.showAPI },
     { method: 'GET', path: '/api/v1.1/components/', config: componentController.getAllComponents },
     { method: 'POST', path: '/api/v1.1/components/getOneComponent/', config: componentController.getOneComponent },
-    { method: 'POST', path: '/api/v1.1/components/create/', config: componentController.createComponent }
+    { method: 'POST', path: '/api/v1.1/components/create/', config: componentController.createComponent },
+    { method: 'PUT', path: '/api/v1.1/components/update/', config: componentController.updateComponent }
 ]

@@ -78,14 +78,14 @@ createComponent = {
                     }
                     else {
                         if (11000 === err.code || 11001 === err.code) {
-                            reply(Boom.forbidden("Component is probably already entered"));
+                            reply(Boom.forbidden(getErrorMessageFrom(err)));
                         }
                         else reply(Boom.forbidden(getErrorMessageFrom(err))); // HTTP 403
                     }
                 });
             }
             else {
-                reply(Boom.badRequest("Component already exists"));
+                reply(Boom.badRequest('Exists'));
             }
         });
     }
@@ -95,15 +95,27 @@ createComponent = {
 updateComponent = {
     validate: {
         payload: {
-            testId: Joi.string().required()
+            componentId: Joi.string().required(),
+            price: Joi.number().required()
         }
+    },
+    handler: function(request, reply) {
+        componentModel.findOneAndUpdate(
+            { componentId: request.payload.componentId },
+            { price: request.payload.price },
+            function(err, updatedTestData) {
+                if(err) reply(Boom.badRequest());
+                reply().code(204);
+            }
+        )
     }
-}
+};
 
 module.exports = {
     Component: componentModel,
     showAPI,
     getAllComponents,
     getOneComponent,
-    createComponent
+    createComponent,
+    updateComponent
 }
