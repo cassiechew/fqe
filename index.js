@@ -14,6 +14,7 @@ const routes    =   require('./routes/routes');
 
 ////////////////////////////////////////////////////////////////////////////////
 
+
 server.connection({
   host: 'localhost',
   port: 1337,
@@ -24,10 +25,10 @@ server.connection({
 
 //server.auth.strategy('localhost', 'ip-whitelist', '127.0.0.1');
 
+
+
+
 server.route(routes.endpoints);
-
-
-
 
 server.register({
     register: Good,
@@ -58,5 +59,6 @@ server.register({
       }
 
       server.log('info', 'Server running at: ' + server.info.uri);
+
   });
 });

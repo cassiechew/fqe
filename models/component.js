@@ -22,6 +22,10 @@ const ComponentSchema       = new Schema({
 
 const componentModel = Mongoose.model('component', ComponentSchema);
 
+(err) => {
+
+}
+
 showAPI = {
     handler: function(request, reply) {
         reply({
